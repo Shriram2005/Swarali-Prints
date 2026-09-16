@@ -11,7 +11,6 @@ import {
   Menu,
   X,
   Printer,
-  Sparkles,
   Search,
   Clock,
   ShieldCheck,
@@ -51,7 +50,6 @@ export const Navbar: React.FC = () => {
     { name: 'Shop Products', href: '/products' },
     { name: 'Custom Printing', href: '/custom-printing', highlight: true },
     { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Offers', href: '/offers' },
     { name: 'Track Order', href: '/track-order' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -212,15 +210,6 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Icons */}
           <div className="flex items-center space-x-3">
-            {/* Quick Quote Button */}
-            <Link
-              href="/request-quote"
-              className="hidden md:inline-flex items-center gap-1 px-3.5 py-2 rounded-lg text-xs font-bold border border-blue-800 text-blue-900 hover:bg-blue-50 transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-pink-600" />
-              <span>Get a Quote</span>
-            </Link>
-
             {/* Cart Icon with Live Count */}
             <Link
               href="/cart"
@@ -276,13 +265,6 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-4 border-t border-slate-100 space-y-2">
-            <Link
-              href="/request-quote"
-              className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-lg border border-blue-800 text-blue-900 font-semibold text-sm"
-            >
-              <Sparkles className="w-4 h-4 text-pink-600" />
-              <span>Request Custom Price Quote</span>
-            </Link>
             <Link
               href="/printing-shop-cidco-nashik"
               className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg bg-slate-100 text-slate-800 text-xs font-medium"

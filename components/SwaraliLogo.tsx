@@ -179,7 +179,7 @@ export const SwaraliLogo: React.FC<SwaraliLogoProps> = ({
               fontSize="10.5"
               fontWeight="800"
               letterSpacing="0.8"
-              fontFamily="system-ui, -apple-system, sans-serif"
+              fontFamily="'Sora', system-ui, -apple-system, sans-serif"
             >
               Swarali Prints – Your Ideas, Our Prints
             </text>

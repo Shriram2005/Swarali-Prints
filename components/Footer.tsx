@@ -227,24 +227,9 @@ export const Footer: React.FC = () => {
           </p>
         </div>
 
-        {/* Bottom Bar: Copyright & Payment Security */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            © {new Date().getFullYear()} Swarali Prints (स्वराली प्रिंट्स). All rights reserved. Your Ideas, Our Prints.
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span>Accepted Payments:</span>
-            <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 font-mono">
-              UPI (GPay, PhonePe, Paytm)
-            </span>
-            <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 font-mono">
-              Cash on Pickup
-            </span>
-            <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 font-mono">
-              Cards / NetBanking
-            </span>
-          </div>
+        {/* Bottom Bar: Copyright */}
+        <div className="pt-6 text-center sm:text-left text-xs text-slate-500">
+          © {new Date().getFullYear()} Swarali Prints (स्वराली प्रिंट्स). All rights reserved. Your Ideas, Our Prints.
         </div>
       </div>
     </footer>
