@@ -20,17 +20,31 @@ export const metadata: Metadata = {
   title: 'Swarali Prints — Custom Printing Services in Cidco, Nashik',
   description:
     'Custom Printing Services & E-Commerce in Cidco, Nashik. Flex banners, visiting cards, digital prints, document printing, proof approval, and live order tracking.',
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
   openGraph: {
     title: 'Swarali Prints — Custom Printing Services in Cidco, Nashik',
     description:
       'Custom Printing Services & E-Commerce in Cidco, Nashik. Flex banners, visiting cards, digital prints, document printing, proof approval, and live order tracking.',
     type: 'website',
+    images: [
+      {
+        url: '/logo.jpg',
+        width: 360,
+        height: 203,
+        alt: 'Swarali Prints Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Swarali Prints — Custom Printing Services in Cidco, Nashik',
     description:
       'Custom Printing Services & E-Commerce in Cidco, Nashik. Flex banners, visiting cards, digital prints, document printing, proof approval, and live order tracking.',
+    images: ['/logo.jpg'],
   },
 };
 
