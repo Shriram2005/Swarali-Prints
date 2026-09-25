@@ -26,8 +26,8 @@ export const INITIAL_SETTINGS: StoreSettings = {
   state: 'Maharashtra',
   pincode: '422008',
   openingHours: 'Monday – Saturday: 9:30 AM to 9:00 PM | Sunday: 10:00 AM to 2:00 PM',
-  googleMapsUrl: 'https://maps.app.goo.gl/iRdzZ4XFGz7SHzf79',
-  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.529272306148!2d73.75487737522964!3d19.98677618141443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddeb0e7552ea63%3A0x7d6a5ccecb35cbf2!2sTrimurti%20Chowk%2C%20Cidco%2C%20Nashik%2C%20Maharashtra%20422008!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
+  googleMapsUrl: 'https://maps.app.goo.gl/mkEikdDKM32mBLQy9',
+  googleMapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.581385094904!2d73.7534938!3d19.9840996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddebd1394b193b%3A0x1a99a2e2b01e7d94!2sSwarali%20Prints!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin',
   upiId: 'swaraliprints@okaxis',
   gstNumber: '27AAYCS1234F1Z8',
   deliveryCharges: {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingBag, Search, Star, Filter, ArrowRight, Check } from 'lucide-react';
+import { ShoppingBag, Search, Filter, ArrowRight, Check } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
@@ -160,9 +160,6 @@ export default function ProductsPage() {
                         Save ₹{prod.basePrice - prod.salePrice}
                       </div>
                     )}
-                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-xs font-bold px-2.5 py-1 rounded-lg shadow">
-                      ⭐ {prod.rating} ({prod.reviewCount})
-                    </div>
                   </div>
 
                   <div className="p-6 flex-1 flex flex-col justify-between space-y-4">

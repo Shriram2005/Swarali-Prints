@@ -58,15 +58,23 @@ export default function ContactPage() {
                 <h2 className="text-xl font-bold text-slate-900">Store Information</h2>
 
                 <div className="space-y-4 text-xs sm:text-sm text-slate-700">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-pink-600 flex-shrink-0 mt-0.5" />
+                  <a
+                    href={INITIAL_SETTINGS.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 group hover:text-slate-900 transition-colors"
+                    title="Open Swarali Prints on Google Maps"
+                  >
+                    <MapPin className="w-5 h-5 text-pink-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                     <div>
-                      <strong className="block text-slate-900 font-bold">Shop Address:</strong>
+                      <strong className="block text-slate-900 font-bold group-hover:text-pink-600 transition-colors">
+                        Shop Address (Click for Directions):
+                      </strong>
                       Shop No. 1, Opposite New Sadguru Hotel,<br />
                       Trimurti Chowk, Cidco, Shivshakti Nagar,<br />
                       Nashik, Maharashtra – 422008
                     </div>
-                  </div>
+                  </a>
 
                   <div className="flex items-start gap-3">
                     <Phone className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />

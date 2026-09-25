@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import SwaraliLogo from './SwaraliLogo';
 import { buildWhatsAppChatLink } from '@/lib/whatsapp';
+import { INITIAL_SETTINGS } from '@/lib/data';
 
 export const Footer: React.FC = () => {
   return (
@@ -36,9 +37,15 @@ export const Footer: React.FC = () => {
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-pink-400">
                 <Award className="w-3.5 h-3.5" /> Proof Approval Before Print
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-blue-400">
-                <MapPin className="w-3.5 h-3.5" /> Trimurti Chowk Store
-              </span>
+              <a
+                href={INITIAL_SETTINGS.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 hover:bg-slate-800 border border-slate-800 text-blue-400 hover:text-blue-300 transition-colors"
+                title="View Swarali Prints on Google Maps"
+              >
+                <MapPin className="w-3.5 h-3.5 text-pink-500" /> Trimurti Chowk Store
+              </a>
             </div>
 
             <div className="pt-2">
@@ -191,7 +198,7 @@ export const Footer: React.FC = () => {
 
               <div className="pt-3">
                 <a
-                  href="https://maps.app.goo.gl/iRdzZ4XFGz7SHzf79"
+                  href={INITIAL_SETTINGS.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-900/60 hover:bg-blue-800 border border-blue-700 text-blue-200 text-xs font-semibold transition-colors"

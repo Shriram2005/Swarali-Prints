@@ -70,10 +70,16 @@ export default function HomePage() {
               {/* Left Headline & CTAs (7 cols) */}
               <div className="lg:col-span-7 space-y-6">
                 {/* Hyperlocal Trust Tag */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700 text-xs font-bold tracking-wide shadow-xs">
+                <a
+                  href={INITIAL_SETTINGS.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-50 hover:bg-pink-100 border border-pink-200 text-pink-700 text-xs font-bold tracking-wide shadow-xs transition-colors"
+                  title="View Swarali Prints location on Google Maps"
+                >
                   <MapPin className="w-3.5 h-3.5 text-pink-600" />
                   <span>Printing Shop at Trimurti Chowk, Cidco, Nashik</span>
-                </div>
+                </a>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.12]">
                   Your Ideas.{' '}
@@ -313,9 +319,6 @@ export default function HomePage() {
                       Save ₹{prod.basePrice - prod.salePrice}
                     </div>
                   )}
-                  <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-xs font-bold px-2.5 py-1 rounded-lg shadow">
-                    ⭐ {prod.rating} ({prod.reviewCount})
-                  </div>
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">

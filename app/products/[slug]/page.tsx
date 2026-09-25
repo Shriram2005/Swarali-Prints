@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import {
   ShoppingBag,
-  Star,
   CheckCircle2,
   Clock,
   ShieldCheck,
@@ -103,11 +102,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         address: 'Trimurti Chowk, Cidco, Nashik 422008',
       },
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: product.rating,
-      reviewCount: product.reviewCount,
-    },
   };
 
   return (
@@ -179,11 +173,6 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   <span className="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-2.5 py-0.5 rounded-md">
                     {product.category.replace('-', ' ')}
                   </span>
-                  <div className="flex items-center text-xs font-bold text-slate-700">
-                    <span className="text-amber-500 mr-1">★</span>
-                    <span>{product.rating}</span>
-                    <span className="text-slate-400 ml-1">({product.reviewCount} reviews)</span>
-                  </div>
                 </div>
 
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">

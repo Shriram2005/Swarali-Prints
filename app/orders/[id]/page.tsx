@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   Share2,
+  ExternalLink,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -23,6 +24,7 @@ import PrintInvoice from '@/components/PrintInvoice';
 import { Order } from '@/lib/types';
 import { getOrderById, updateOrderStatus } from '@/lib/storage';
 import { buildWhatsAppOrderSummary, buildWhatsAppChatLink } from '@/lib/whatsapp';
+import { INITIAL_SETTINGS } from '@/lib/data';
 
 interface OrderDetailPageProps {
   params: Promise<{ id: string }>;
@@ -259,6 +261,16 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
                     <div className="text-slate-800 font-semibold">
                       Shop No. 1, Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik
                     </div>
+                    <a
+                      href={INITIAL_SETTINGS.googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-pink-600 hover:text-pink-700 text-xs font-semibold hover:underline mt-1.5"
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>Get Directions on Google Maps</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
                   </div>
                 )}
 

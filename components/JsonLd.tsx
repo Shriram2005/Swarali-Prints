@@ -36,8 +36,8 @@ export function getLocalBusinessSchema() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '19.986776',
-      longitude: '73.754877',
+      latitude: '19.984100',
+      longitude: '73.756069',
     },
     openingHoursSpecification: [
       {
@@ -54,7 +54,7 @@ export function getLocalBusinessSchema() {
       },
     ],
     sameAs: [
-      'https://maps.app.goo.gl/iRdzZ4XFGz7SHzf79',
+      'https://maps.app.goo.gl/mkEikdDKM32mBLQy9',
       'https://www.indiamart.com/swarali-prints',
     ],
     areaServed: [

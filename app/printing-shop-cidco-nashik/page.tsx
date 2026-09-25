@@ -121,15 +121,23 @@ export default function CidcoPrintingShopPage() {
                 </h2>
 
                 <div className="space-y-3.5 text-xs text-slate-700">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-pink-600 flex-shrink-0 mt-0.5" />
+                  <a
+                    href={INITIAL_SETTINGS.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 group hover:text-slate-900 transition-colors"
+                    title="Open Swarali Prints on Google Maps"
+                  >
+                    <MapPin className="w-5 h-5 text-pink-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                     <div>
-                      <strong className="text-slate-900 text-sm block font-bold">Physical Address:</strong>
+                      <strong className="text-slate-900 text-sm block font-bold group-hover:text-pink-600 transition-colors">
+                        Physical Address (Click for Directions):
+                      </strong>
                       Shop No. 1, Opposite New Sadguru Hotel,<br />
                       Trimurti Chowk, Cidco, Shivshakti Nagar,<br />
                       Nashik, Maharashtra – 422008
                     </div>
-                  </div>
+                  </a>
 
                   <div className="flex items-start gap-3">
                     <Phone className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />

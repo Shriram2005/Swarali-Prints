@@ -13,7 +13,6 @@ import {
   Printer,
   Search,
   Clock,
-  ShieldCheck,
   ChevronDown,
 } from 'lucide-react';
 import SwaraliLogo from './SwaraliLogo';
@@ -69,10 +68,16 @@ export const Navbar: React.FC = () => {
       <div className="bg-slate-900 text-slate-200 text-xs py-1.5 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-slate-300">
+            <a
+              href="https://maps.app.goo.gl/mkEikdDKM32mBLQy9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
+              title="Open Swarali Prints location on Google Maps"
+            >
               <MapPin className="w-3.5 h-3.5 text-pink-500" />
               <span>Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik</span>
-            </span>
+            </a>
             <span className="hidden md:flex items-center gap-1 text-slate-400">
               <Clock className="w-3.5 h-3.5 text-lime-400" />
               <span>Open Today: 9:30 AM – 9:00 PM</span>
@@ -97,14 +102,6 @@ export const Navbar: React.FC = () => {
               <MessageCircle className="w-3.5 h-3.5" />
               <span>WhatsApp Us</span>
             </a>
-            <span className="text-slate-700 hidden sm:inline">|</span>
-            <Link
-              href="/admin"
-              className="hidden sm:flex items-center gap-1 text-xs text-pink-400 hover:text-pink-300 font-medium"
-            >
-              <ShieldCheck className="w-3 h-3" />
-              <span>Admin</span>
-            </Link>
           </div>
         </div>
       </div>
@@ -114,7 +111,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <SwaraliLogo size="md" withLink showTagline={true} />
+            <SwaraliLogo size="sm" withLink showTagline={true} />
           </div>
 
           {/* Desktop Nav Links */}
@@ -264,20 +261,13 @@ export const Navbar: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-4 border-t border-slate-100 space-y-2">
+          <div className="pt-4 border-t border-slate-100">
             <Link
               href="/printing-shop-cidco-nashik"
               className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg bg-slate-100 text-slate-800 text-xs font-medium"
             >
               <MapPin className="w-3.5 h-3.5 text-pink-600" />
               <span>Cidco Nashik Store Guide & Directions</span>
-            </Link>
-            <Link
-              href="/admin"
-              className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg border border-dashed border-slate-300 text-slate-600 text-xs"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-slate-500" />
-              <span>Business Admin Dashboard</span>
             </Link>
           </div>
         </div>

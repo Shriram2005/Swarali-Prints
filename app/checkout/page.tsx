@@ -15,6 +15,7 @@ import {
   Clock,
   ArrowRight,
   MessageCircle,
+  ExternalLink,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -22,6 +23,7 @@ import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
 import { CartItem, Coupon, Order, FulfillmentMethod, PaymentMethod, PaymentStatus } from '@/lib/types';
 import { getCart, getActiveCoupon, saveOrder, clearCart, getStoreSettings } from '@/lib/storage';
 import { buildWhatsAppOrderSummary } from '@/lib/whatsapp';
+import { INITIAL_SETTINGS } from '@/lib/data';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -401,10 +403,21 @@ export default function CheckoutPage() {
                 </div>
 
                 {fulfillmentMethod === 'store_pickup' ? (
-                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
-                    <div className="font-bold text-slate-800 flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-pink-600" />
-                      <span>Pickup Counter Location:</span>
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1.5">
+                    <div className="font-bold text-slate-800 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-pink-600" />
+                        <span>Pickup Counter Location:</span>
+                      </div>
+                      <a
+                        href={INITIAL_SETTINGS.googleMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] text-pink-600 hover:text-pink-700 font-semibold hover:underline"
+                      >
+                        <span>Maps</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
                     </div>
                     <p>Shop No. 1, Opposite New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik.</p>
                     <p className="text-[11px] text-slate-500">We will message you on WhatsApp as soon as your job is printed and trimmed.</p>
