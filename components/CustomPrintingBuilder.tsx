@@ -139,12 +139,12 @@ export const CustomPrintingBuilder: React.FC<CustomPrintingBuilderProps> = ({
       title: serviceNames[selectedService] || 'Custom Print Job',
       image:
         selectedService === 'flex-printing'
-          ? 'https://picsum.photos/seed/flexbanner/800/600'
+          ? '/images/product-outdoor-flex-banner.jpg'
           : selectedService === 'document-printing'
-          ? 'https://picsum.photos/seed/documentprint/800/600'
+          ? '/images/portfolio-thesis-hardbound.jpg'
           : selectedService === 'visiting-cards'
-          ? 'https://picsum.photos/seed/visitingcard/800/600'
-          : 'https://picsum.photos/seed/stickerprint/800/600',
+          ? '/images/product-matte-visiting-cards.jpg'
+          : '/images/product-die-cut-vinyl-stickers.jpg',
       quantity: 1,
       unitPrice: pricing.total,
       totalPrice: pricing.total,

@@ -10,8 +10,6 @@ import {
   ShoppingBag,
   Menu,
   X,
-  Printer,
-  Search,
   Clock,
   ChevronDown,
 } from 'lucide-react';
@@ -47,7 +45,7 @@ export const Navbar: React.FC = () => {
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services', hasDropdown: true },
     { name: 'Shop Products', href: '/products' },
-    { name: 'Custom Printing', href: '/custom-printing', highlight: true },
+    { name: 'Custom Printing', href: '/custom-printing' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Track Order', href: '/track-order' },
     { name: 'Contact', href: '/contact' },
@@ -175,20 +173,6 @@ export const Navbar: React.FC = () => {
                 );
               }
 
-              if (link.highlight) {
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-pink-600 via-rose-500 to-pink-600 text-white shadow-sm hover:shadow hover:brightness-105 transition-all"
-                  >
-                    <Printer className="w-4 h-4" />
-                    <span>{link.name}</span>
-                    <span className="inline-block w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
-                  </Link>
-                );
-              }
-
               return (
                 <Link
                   key={link.name}
@@ -236,16 +220,7 @@ export const Navbar: React.FC = () => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg max-h-[80vh] overflow-y-auto">
-          {/* Custom Printing prominent button */}
-          <Link
-            href="/custom-printing"
-            className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-pink-600 text-white font-bold text-base shadow-sm"
-          >
-            <Printer className="w-5 h-5" />
-            <span>Start Custom Printing Order</span>
-          </Link>
-
-          <div className="pt-2 space-y-1">
+          <div className="space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
