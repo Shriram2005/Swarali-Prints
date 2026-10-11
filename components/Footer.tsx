@@ -4,239 +4,224 @@ import {
   MapPin,
   Phone,
   Mail,
-  Clock,
   MessageCircle,
   ExternalLink,
-  ShieldCheck,
-  Award,
-  CheckCircle2,
 } from 'lucide-react';
 import SwaraliLogo from './SwaraliLogo';
 import { buildWhatsAppChatLink } from '@/lib/whatsapp';
 import { INITIAL_SETTINGS } from '@/lib/data';
 
 export const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  const services = [
+    { name: 'Flex & Banner Printing', href: '/services/flex-printing' },
+    { name: 'Visiting & Business Cards', href: '/services/visiting-card-printing' },
+    { name: 'Document & Thesis Xerox', href: '/services/document-printing' },
+    { name: 'Waterproof Vinyl Stickers', href: '/services/sticker-label-printing' },
+    { name: 'Sunboard Posters & Frames', href: '/services/poster-printing' },
+    { name: 'Brochures & Pamphlets', href: '/services/flyer-brochure-printing' },
+  ];
+
+  const quickLinks = [
+    { name: 'Custom Print Calculator', href: '/custom-printing', highlight: true },
+    { name: 'Request Bulk Quotation', href: '/request-quote' },
+    { name: 'Track Order Status', href: '/track-order' },
+    { name: 'Portfolio & Recent Work', href: '/portfolio' },
+    { name: 'Shop Ready Products', href: '/products' },
+    { name: 'Discounts & Offers', href: '/offers' },
+    { name: 'Frequently Asked Questions', href: '/faq' },
+  ];
+
+  const localities = [
+    { name: 'Trimurti Chowk', href: '/printing-shop-cidco-nashik' },
+    { name: 'Cidco', href: '/printing-shop-cidco-nashik' },
+    { name: 'Pawan Nagar', href: '/printing-shop-cidco-nashik' },
+    { name: 'Govind Nagar', href: '/printing-shop-cidco-nashik' },
+    { name: 'Indira Nagar', href: '/printing-shop-cidco-nashik' },
+    { name: 'Untwadi', href: '/printing-shop-cidco-nashik' },
+    { name: 'Lekha Nagar', href: '/printing-shop-cidco-nashik' },
+    { name: 'Ambad MIDC', href: '/printing-shop-cidco-nashik' },
+  ];
+
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-14 pb-8 border-t border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-800">
-          {/* Brand & Store Profile (2 Cols) */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white/95 p-3 rounded-xl inline-block shadow-md">
-              <SwaraliLogo size="md" showTagline={true} />
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-800/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+        {/* Main Columns Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-slate-800/70">
+          {/* Brand Info (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
+            <div className="bg-white px-3 py-1.5 rounded-xl inline-flex items-center shadow-xs">
+              <SwaraliLogo size="md" withLink showTagline={true} />
             </div>
+
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Your trusted local printing partner in Cidco, Nashik. From everyday Xerox and student thesis binding to massive 20ft outdoor flex banners, high-resolution visiting cards, and custom die-cut vinyl stickers.
+              Your trusted local printing destination in Cidco, Nashik. Fast turnaround, eco-solvent color precision, and verified proof approval before printing.
             </p>
 
-            <div className="pt-2 flex flex-wrap gap-2 text-xs">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-lime-400">
-                <CheckCircle2 className="w-3.5 h-3.5" /> High-Speed Eco-Solvent
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-pink-400">
-                <Award className="w-3.5 h-3.5" /> Proof Approval Before Print
-              </span>
-              <a
-                href={INITIAL_SETTINGS.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-900 hover:bg-slate-800 border border-slate-800 text-blue-400 hover:text-blue-300 transition-colors"
-                title="View Swarali Prints on Google Maps"
-              >
-                <MapPin className="w-3.5 h-3.5 text-pink-500" /> Trimurti Chowk Store
-              </a>
-            </div>
+            {/* Quick Live Status & WhatsApp */}
+            <div className="pt-1 flex flex-col sm:flex-row sm:items-center gap-2.5">
+              <div className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-900 border border-slate-800/80 px-2.5 py-1.5 rounded-lg">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Open Mon–Sat: 9:30 AM – 9 PM</span>
+              </div>
 
-            <div className="pt-2">
               <a
                 href={buildWhatsAppChatLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold shadow transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 hover:bg-emerald-950/60 border border-emerald-800/50 px-3 py-1.5 rounded-lg transition-colors"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>Instant WhatsApp Inquiry</span>
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>WhatsApp Us</span>
               </a>
             </div>
           </div>
 
-          {/* Quick Services */}
-          <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-pink-500" />
+          {/* Popular Services (3 cols) */}
+          <div className="lg:col-span-3">
+            <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">
               Printing Services
             </h3>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/services/flex-printing" className="hover:text-pink-400 transition-colors">
-                  Flex & Banner Printing
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/visiting-card-printing" className="hover:text-pink-400 transition-colors">
-                  Visiting & Business Cards
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/document-printing" className="hover:text-pink-400 transition-colors">
-                  Document & Thesis Printing
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/sticker-label-printing" className="hover:text-pink-400 transition-colors">
-                  Waterproof Vinyl Stickers
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/poster-printing" className="hover:text-pink-400 transition-colors">
-                  Posters & Sunboard Mounts
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/flyer-brochure-printing" className="hover:text-pink-400 transition-colors">
-                  Pamphlets & Brochures
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/invitation-printing" className="hover:text-pink-400 transition-colors">
-                  Wedding Cards & Stationery
+            <ul className="space-y-2.5 text-sm text-slate-400">
+              {services.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-pink-400 transition-colors inline-block"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-1">
+                <Link
+                  href="/services"
+                  className="text-xs font-medium text-pink-400 hover:text-pink-300 inline-flex items-center gap-1"
+                >
+                  <span>View All Services</span>
+                  <span>&rarr;</span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Customer & Order Links */}
-          <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500" />
-              Quick Actions
+          {/* Quick Actions (2 cols) */}
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">
+              Quick Links
             </h3>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/custom-printing" className="text-pink-400 hover:underline font-semibold flex items-center gap-1">
-                  <span>Custom Print Calculator</span> &rarr;
-                </Link>
-              </li>
-              <li>
-                <Link href="/products" className="hover:text-white transition-colors">
-                  Shop Ready Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/track-order" className="hover:text-white transition-colors">
-                  Track Your Order Status
-                </Link>
-              </li>
-              <li>
-                <Link href="/request-quote" className="hover:text-white transition-colors">
-                  Request Bulk Quotation
-                </Link>
-              </li>
-              <li>
-                <Link href="/portfolio" className="hover:text-white transition-colors">
-                  Portfolio & Recent Work
-                </Link>
-              </li>
-              <li>
-                <Link href="/offers" className="hover:text-white transition-colors">
-                  Coupons & Local Offers
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-white transition-colors">
-                  Frequently Asked Questions
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="text-slate-500 hover:text-slate-400 flex items-center gap-1 text-xs pt-2">
-                  <ShieldCheck className="w-3 h-3" /> Admin Dashboard
-                </Link>
-              </li>
+            <ul className="space-y-2.5 text-sm text-slate-400">
+              {quickLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className={`transition-colors inline-block ${
+                      item.highlight
+                        ? 'text-pink-400 hover:text-pink-300 font-medium'
+                        : 'hover:text-white'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact & NAP */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-lime-400" />
-              Store Location
+          {/* Store Location & Direct Contact (3 cols) */}
+          <div className="lg:col-span-3 space-y-3.5">
+            <h3 className="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">
+              Store & Contact
             </h3>
 
-            <div className="text-xs text-slate-300 space-y-2">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-pink-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-white block text-sm">Swarali Prints</strong>
+            <div className="space-y-2.5 text-xs text-slate-400">
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-pink-500 shrink-0 mt-0.5" />
+                <address className="not-italic leading-relaxed text-slate-300">
+                  <strong className="text-white block font-medium">Swarali Prints</strong>
                   Shop No. 1, Opp. New Sadguru Hotel,<br />
-                  Trimurti Chowk, Cidco, Shivshakti Nagar,<br />
-                  Nashik, Maharashtra 422008
-                </div>
+                  Trimurti Chowk, Cidco, Nashik 422008
+                </address>
               </div>
 
-              <div className="flex items-center gap-2 pt-1">
-                <Phone className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                <a href="tel:+919823123456" className="hover:text-white">
-                  +91 98231 23456 / +91 94222 78910
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-blue-400 shrink-0" />
+                <a
+                  href="tel:+919823123456"
+                  className="hover:text-white transition-colors"
+                >
+                  +91 98231 23456 / 94222 78910
                 </a>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                <a href="mailto:contact@swaraliprints.com" className="hover:text-white">
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                <a
+                  href="mailto:contact@swaraliprints.com"
+                  className="hover:text-white transition-colors"
+                >
                   contact@swaraliprints.com
                 </a>
               </div>
+            </div>
 
-              <div className="flex items-start gap-2 pt-1">
-                <Clock className="w-4 h-4 text-lime-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <div>Mon – Sat: 9:30 AM – 9:00 PM</div>
-                  <div className="text-slate-400">Sun: 10:00 AM – 2:00 PM</div>
-                </div>
-              </div>
-
-              <div className="pt-3">
-                <a
-                  href={INITIAL_SETTINGS.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-900/60 hover:bg-blue-800 border border-blue-700 text-blue-200 text-xs font-semibold transition-colors"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Get Directions on Google Maps</span>
-                </a>
-              </div>
+            <div className="pt-1">
+              <a
+                href={INITIAL_SETTINGS.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                <ExternalLink className="w-3.5 h-3.5 text-pink-500" />
+                <span>Open in Google Maps</span>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Hyperlocal Nashik Service Area Anchors */}
-        <div className="py-6 border-b border-slate-800 text-xs text-slate-400">
-          <div className="font-semibold text-slate-300 mb-2">
-            Hyperlocal Printing Service Coverage in Nashik:
+        {/* Hyperlocal Service Coverage (Clean chip pills) */}
+        <div className="py-5 border-b border-slate-800/70 flex flex-col md:flex-row md:items-center gap-3 text-xs">
+          <span className="text-slate-400 font-medium shrink-0">
+            Local Pickup & Delivery:
+          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {localities.map((loc) => (
+              <Link
+                key={loc.name}
+                href={loc.href}
+                className="px-2.5 py-1 rounded-md bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+              >
+                {loc.name}
+              </Link>
+            ))}
+            <span className="text-slate-500 text-[11px] px-1.5">
+              & surrounding Nashik areas
+            </span>
           </div>
-          <p className="leading-relaxed">
-            Serving nearby localities with fast store pickup and local delivery:
-            <Link href="/printing-shop-cidco-nashik" className="text-pink-400 hover:underline mx-1">
-              Trimurti Chowk
-            </Link> •
-            <span className="text-slate-300 mx-1">Cidco</span> •
-            <span className="text-slate-300 mx-1">Shivshakti Nagar</span> •
-            <span className="text-slate-300 mx-1">Pawan Nagar</span> •
-            <span className="text-slate-300 mx-1">Lekha Nagar</span> •
-            <span className="text-slate-300 mx-1">Govind Nagar</span> •
-            <span className="text-slate-300 mx-1">Indira Nagar</span> •
-            <span className="text-slate-300 mx-1">Untwadi</span> •
-            <span className="text-slate-300 mx-1">Cidco Bus Stand</span> •
-            <span className="text-slate-300 mx-1">Ambad MIDC</span> •
-            <span className="text-slate-300 mx-1">Nashik City</span>
-          </p>
         </div>
 
-        {/* Bottom Bar: Copyright */}
-        <div className="pt-6 text-center sm:text-left text-xs text-slate-500">
-          © {new Date().getFullYear()} Swarali Prints (स्वराली प्रिंट्स). All rights reserved. Your Ideas, Our Prints.
+        {/* Bottom Bar: Copyright & Secondary Links */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <p className="text-center sm:text-left">
+            © {currentYear} Swarali Prints (स्वराली प्रिंट्स). All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-4">
+            <Link
+              href="/printing-shop-cidco-nashik"
+              className="hover:text-slate-400 transition-colors"
+            >
+              Cidco Guide
+            </Link>
+            <span>•</span>
+            <Link
+              href="/contact"
+              className="hover:text-slate-400 transition-colors"
+            >
+              Contact
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

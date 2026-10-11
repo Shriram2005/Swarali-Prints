@@ -5,18 +5,18 @@ import { buildWhatsAppChatLink } from '@/lib/whatsapp';
 
 export const WhatsAppFloatingButton: React.FC = () => {
   return (
-    <aside aria-label="WhatsApp Support" className="fixed bottom-6 right-6 z-40 flex items-center group">
-      <span className="hidden md:inline-block mr-3 px-3 py-1.5 rounded-full bg-slate-900/90 backdrop-blur text-white text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-x-2 group-hover:translate-x-0 border border-slate-700">
-        Chat with Swarali Prints on WhatsApp
-      </span>
+    <aside aria-label="WhatsApp Support" className="fixed bottom-6 right-6 z-40 pointer-events-none">
       <a
         href={buildWhatsAppChatLink()}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_25px_rgba(37,211,102,0.6)] hover:scale-110 active:scale-95 transition-all duration-300"
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_25px_rgba(37,211,102,0.6)] hover:scale-110 active:scale-95 transition-all duration-300 pointer-events-auto"
         aria-label="Chat with Swarali Prints on WhatsApp"
         title="Chat on WhatsApp"
       >
+        <span className="hidden md:inline-block absolute right-full mr-3 whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-900/95 backdrop-blur text-white text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-x-2 group-hover:translate-x-0 border border-slate-700">
+          Chat with Swarali Prints on WhatsApp
+        </span>
         <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-lime-400 rounded-full animate-ping" />
         <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-lime-400 rounded-full border-2 border-white" />
         <svg

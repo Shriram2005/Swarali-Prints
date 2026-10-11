@@ -63,32 +63,38 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-white shadow-sm transition-all">
       {/* Hyperlocal Top Bar */}
-      <div className="bg-slate-900 text-slate-200 text-xs py-1.5 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-4">
+      <div className="bg-slate-900 text-slate-200 py-1.5 px-3 sm:px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[11px] sm:text-xs">
+          <div className="flex items-center gap-3 min-w-0">
             <a
               href="https://maps.app.goo.gl/mkEikdDKM32mBLQy9"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
-              title="Open Swarali Prints location on Google Maps"
+              className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors min-w-0"
+              title="Open Swarali Prints location on Google Maps: Shop No. 1, Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik"
             >
-              <MapPin className="w-3.5 h-3.5 text-pink-500" />
-              <span>Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik</span>
+              <MapPin className="w-3.5 h-3.5 text-pink-500 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden font-medium">Trimurti Chowk, Cidco</span>
+                <span className="hidden sm:inline md:hidden">Trimurti Chowk, Cidco, Nashik</span>
+                <span className="hidden md:inline">Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik</span>
+              </span>
             </a>
-            <span className="hidden md:flex items-center gap-1 text-slate-400">
+            <span className="hidden md:flex items-center gap-1 text-slate-400 shrink-0">
               <Clock className="w-3.5 h-3.5 text-lime-400" />
               <span>Open Today: 9:30 AM – 9:00 PM</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-3 ml-auto">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <a
               href="tel:+919823123456"
               className="flex items-center gap-1 hover:text-white transition-colors"
+              title="Call Swarali Prints at +91 98231 23456"
             >
-              <Phone className="w-3 h-3 text-blue-400" />
-              <span className="font-medium">+91 98231 23456</span>
+              <Phone className="w-3 h-3 text-blue-400 shrink-0" />
+              <span className="font-medium hidden sm:inline">+91 98231 23456</span>
+              <span className="font-medium sm:hidden">Call</span>
             </a>
             <span className="text-slate-700">|</span>
             <a
@@ -96,9 +102,11 @@ export const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-lime-400 hover:text-lime-300 font-semibold"
+              title="Chat on WhatsApp"
             >
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>WhatsApp Us</span>
+              <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">WhatsApp Us</span>
+              <span className="sm:hidden">WhatsApp</span>
             </a>
           </div>
         </div>
@@ -236,12 +244,44 @@ export const Navbar: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-4 border-t border-slate-100">
+          <div className="pt-4 border-t border-slate-100 space-y-2.5">
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-600 space-y-2">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-pink-600 shrink-0 mt-0.5" />
+                <span className="font-medium text-slate-800">
+                  Shop No. 1, Opp. New Sadguru Hotel, Trimurti Chowk, Cidco, Nashik
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-600">
+                <Clock className="w-4 h-4 text-lime-600 shrink-0" />
+                <span>Open Today: 9:30 AM – 9:00 PM</span>
+              </div>
+              <div className="flex items-center gap-3 pt-1 border-t border-slate-200/60 font-medium">
+                <a
+                  href="tel:+919823123456"
+                  className="flex items-center gap-1.5 text-blue-600 hover:underline"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>+91 98231 23456</span>
+                </a>
+                <span className="text-slate-300">|</span>
+                <a
+                  href={buildWhatsAppChatLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-emerald-600 hover:underline"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
             <Link
               href="/printing-shop-cidco-nashik"
-              className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg bg-slate-100 text-slate-800 text-xs font-medium"
+              className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition-colors shadow-sm"
             >
-              <MapPin className="w-3.5 h-3.5 text-pink-600" />
+              <MapPin className="w-3.5 h-3.5 text-pink-400" />
               <span>Cidco Nashik Store Guide & Directions</span>
             </Link>
           </div>

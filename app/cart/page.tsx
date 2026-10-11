@@ -34,6 +34,7 @@ export default function CartPage() {
   const [couponCode, setCouponCode] = useState('');
   const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const refreshCart = () => {
     setCartItems(getCart());
@@ -45,6 +46,16 @@ export default function CartPage() {
     window.addEventListener('cart_updated', refreshCart);
     return () => window.removeEventListener('cart_updated', refreshCart);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showClearConfirm) {
+        setShowClearConfirm(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showClearConfirm]);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
 
@@ -130,8 +141,8 @@ export default function CartPage() {
                     <span>{cartItems.length} Item(s) in Cart</span>
                     <button
                       type="button"
-                      onClick={() => clearCart()}
-                      className="text-rose-600 hover:underline font-semibold"
+                      onClick={() => setShowClearConfirm(true)}
+                      className="text-rose-600 hover:text-rose-700 hover:underline font-semibold transition-colors"
                     >
                       Clear All
                     </button>
@@ -265,7 +276,7 @@ export default function CartPage() {
                       <form onSubmit={handleApplyCoupon} className="flex gap-2">
                         <input
                           type="text"
-                          placeholder="e.g. WELCOME10 or CIDCOFREE"
+                          placeholder="Enter coupon code"
                           value={couponCode}
                           onChange={(e) => setCouponCode(e.target.value)}
                           className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs uppercase font-mono font-semibold focus:outline-none focus:ring-2 focus:ring-pink-500"
@@ -285,8 +296,11 @@ export default function CartPage() {
                       </p>
                     )}
 
-                    <div className="text-[11px] text-slate-400">
-                      Try coupon <strong className="text-slate-600">WELCOME10</strong> for 10% off or <strong className="text-slate-600">CIDCOFREE</strong> for local discount.
+                    <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                      <span>Enter your coupon code to apply discount.</span>
+                      <Link href="/offers" className="text-pink-600 hover:underline font-medium">
+                        View Offers &rarr;
+                      </Link>
                     </div>
                   </div>
 
@@ -347,6 +361,55 @@ export default function CartPage() {
 
       <Footer />
       <WhatsAppFloatingButton />
+
+      {/* Clear Cart Confirmation Modal */}
+      {showClearConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-200"
+          onClick={() => setShowClearConfirm(false)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 space-y-5 text-center animate-in zoom-in-95 duration-200"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="clear-cart-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-14 h-14 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto ring-8 ring-rose-50/60">
+              <Trash2 className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 id="clear-cart-title" className="text-lg font-bold text-slate-900">
+                Clear all items from cart?
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Are you sure you want to remove all {cartItems.length} item{cartItems.length > 1 ? 's' : ''} from your cart? This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowClearConfirm(false)}
+                className="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  clearCart();
+                  setShowClearConfirm(false);
+                }}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-colors"
+              >
+                Yes, Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

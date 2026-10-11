@@ -534,126 +534,107 @@ export default function HomePage() {
         </section>
 
         {/* SECTION: STORE LOCATION & GOOGLE MAPS */}
-        <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl sm:rounded-[2.5rem] border border-slate-200/80 p-8 sm:p-12 shadow-xl shadow-slate-200/50 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Store Information (6 cols) */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="space-y-2">
-                <span className="text-pink-600 text-xs font-black uppercase tracking-wider block">
-                  PHYSICAL STORE LOCATION
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  Visit Swarali Prints at Trimurti Chowk, Cidco
-                </h2>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                  Drop by our workshop for instant printing, sample paper inspection, thesis binding, or face-to-face banner design consultations with our specialists.
-                </p>
-              </div>
-
-              <div className="space-y-3.5 text-sm">
-                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-pink-50/40 hover:border-pink-200 transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0 mt-0.5">
-                    <Store className="w-5 h-5 text-pink-600" />
+        <section className="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 lg:p-10 shadow-sm overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+              {/* Store Information (6 cols) */}
+              <div className="lg:col-span-6 space-y-5">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-pink-600 uppercase tracking-wider mb-2">
+                    <MapPin className="w-4 h-4 text-pink-600" />
+                    <span>Physical Store Location</span>
                   </div>
-                  <div>
-                    <strong className="text-slate-900 block font-bold text-sm sm:text-base">
-                      Address
-                    </strong>
-                    <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block leading-relaxed">
-                      Shop No. 1, Opposite New Sadguru Hotel, Trimurti Chowk, Cidco, Shivshakti Nagar, Nashik, Maharashtra 422008
-                    </span>
-                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                    Visit Swarali Prints at Trimurti Chowk, Cidco
+                  </h2>
+                  <p className="text-sm text-slate-600 mt-2 leading-relaxed max-w-xl">
+                    Drop by our workshop for instant printing, sample paper inspection, thesis binding, or face-to-face banner design consultations with our specialists.
+                  </p>
                 </div>
 
-                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-amber-50/40 hover:border-amber-200 transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
-                    <Clock className="w-5 h-5 text-amber-600" />
-                  </div>
-                  <div>
-                    <strong className="text-slate-900 block font-bold text-sm sm:text-base">
-                      Store Hours
-                    </strong>
-                    <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block">
-                      Mon – Sat: 9:30 AM – 9:00 PM | Sun: 10:00 AM – 2:00 PM
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-emerald-50/40 hover:border-emerald-200 transition-all">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
-                    <Phone className="w-5 h-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <strong className="text-slate-900 block font-bold text-sm sm:text-base">
-                      Phone Lines
-                    </strong>
-                    <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block font-medium">
-                      +91 98231 23456 / +91 94222 78910
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
-                <a
-                  href={INITIAL_SETTINGS.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-pink-600/25 transition-all active:scale-95"
-                >
-                  <svg className="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 2.29a1 1 0 0 1 1.42 0l8.88 8.88a1 1 0 0 1 0 1.42l-8.88 8.88a1 1 0 0 1-1.42 0l-8.88-8.88a1 1 0 0 1 0-1.42l8.88-8.88z" />
-                    <path d="M9 14.5v-3a2 2 0 0 1 2-2h4" />
-                    <path d="M12.5 7l3 2.5-3 2.5" />
-                  </svg>
-                  <span>Get Directions on Google Maps</span>
-                </a>
-
-                <Link
-                  href="/printing-shop-cidco-nashik"
-                  className="inline-flex items-center gap-1.5 px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-800 font-bold text-xs sm:text-sm transition-all active:scale-95"
-                >
-                  <span>Cidco Store Guide</span>
-                  <ChevronRight className="w-4 h-4 text-slate-600" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Google Map Image Card with Location Floating Badge (6 cols) */}
-            <div className="lg:col-span-6">
-              <div className="relative rounded-2xl overflow-hidden shadow-lg h-96 w-full border border-slate-200/80 group">
-                <img
-                  src="/images/store-location-map-nashik.jpg"
-                  alt="Swarali Prints Map Location at Trimurti Chowk, Cidco, Nashik"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-slate-900/5 pointer-events-none" />
-
-                {/* Floating location card */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-white/95 backdrop-blur-md shadow-md flex items-center justify-between border border-slate-100">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0">
-                      <MapPin className="w-6 h-6 text-pink-600" />
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-pink-200 hover:bg-pink-50/20 transition-all">
+                    <div className="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Store className="w-5 h-5 text-pink-600" />
                     </div>
                     <div>
-                      <strong className="font-bold text-slate-900 block text-sm sm:text-base">
-                        Trimurti Chowk, Cidco
+                      <strong className="text-slate-900 block font-bold text-sm">
+                        Address
                       </strong>
-                      <span className="text-xs sm:text-sm text-slate-500 font-medium">
-                        Opp. New Sadguru Hotel
+                      <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block leading-relaxed">
+                        Shop No. 1, Opposite New Sadguru Hotel, Trimurti Chowk, Cidco, Shivshakti Nagar, Nashik, Maharashtra 422008
                       </span>
                     </div>
                   </div>
 
+                  <div className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-blue-200 hover:bg-blue-50/20 transition-all">
+                    <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Clock className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <strong className="text-slate-900 block font-bold text-sm">
+                        Store Hours
+                      </strong>
+                      <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block">
+                        Mon – Sat: 9:30 AM – 9:00 PM | Sun: 10:00 AM – 2:00 PM
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-emerald-200 hover:bg-emerald-50/20 transition-all">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Phone className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <strong className="text-slate-900 block font-bold text-sm">
+                        Phone Lines
+                      </strong>
+                      <span className="text-slate-600 text-xs sm:text-sm mt-0.5 block font-medium">
+                        +91 98231 23456 / +91 94222 78910
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 pt-2">
                   <a
                     href={INITIAL_SETTINGS.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white transition-all shadow-md shadow-pink-600/20 hover:scale-105 active:scale-95 flex items-center justify-center shrink-0"
-                    title="Open on Google Maps"
+                    className="py-3 px-5 sm:py-3.5 sm:px-6 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 active:scale-95"
                   >
-                    <ExternalLink className="w-4 h-4 text-white" />
+                    <svg className="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10.29 2.29a1 1 0 0 1 1.42 0l8.88 8.88a1 1 0 0 1 0 1.42l-8.88 8.88a1 1 0 0 1-1.42 0l-8.88-8.88a1 1 0 0 1 0-1.42l8.88-8.88z" />
+                      <path d="M9 14.5v-3a2 2 0 0 1 2-2h4" />
+                      <path d="M12.5 7l3 2.5-3 2.5" />
+                    </svg>
+                    <span>Get Directions on Google Maps</span>
                   </a>
+
+                  <Link
+                    href="/printing-shop-cidco-nashik"
+                    className="py-3 px-4 sm:py-3.5 sm:px-5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition-colors flex items-center gap-1.5 active:scale-95"
+                  >
+                    <span>Cidco Store Guide</span>
+                    <ChevronRight className="w-4 h-4 text-slate-500" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Google Map Showing Swarali Prints Shop Location (6 cols) */}
+              <div className="lg:col-span-6">
+                <div className="relative rounded-2xl overflow-hidden shadow-sm h-80 sm:h-96 lg:h-[420px] w-full border border-slate-200 bg-slate-100">
+                  <iframe
+                    title="Swarali Prints Google Maps Location"
+                    src={INITIAL_SETTINGS.googleMapsEmbed}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={false}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full"
+                  />
                 </div>
               </div>
             </div>
