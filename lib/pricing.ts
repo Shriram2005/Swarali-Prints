@@ -72,8 +72,16 @@ export function calculateCustomPrintPrice(config: CustomJobConfig): PricingResul
       const pages = Math.max(1, Number(config.pageCount) || 1);
       const copies = Math.max(1, Number(config.copies) || 1);
       const totalPages = pages * copies;
+      const isDoubleSided = config.duplex === 'double';
 
-      let pageRate = config.colorMode === 'color' ? 6.0 : 1.5;
+      // B&W: ₹2/page single-sided, ₹3/page double-sided. Color: ₹6/page.
+      let pageRate: number;
+      if (config.colorMode === 'color') {
+        pageRate = 6.0;
+      } else {
+        pageRate = isDoubleSided ? 3.0 : 2.0;
+      }
+
       if (config.paperType?.includes('Executive') || config.paperType?.includes('100 GSM')) {
         pageRate += 1.0;
       } else if (config.paperType?.includes('300 GSM')) {
@@ -84,10 +92,11 @@ export function calculateCustomPrintPrice(config: CustomJobConfig): PricingResul
         pageRate *= 2;
       }
 
-      const printCost = totalPages * pageRate;
+      const printCost = Math.round(totalPages * pageRate);
       baseAmount = printCost;
+      const sideLabel = isDoubleSided ? '2-Sided' : '1-Sided';
       breakdown.push({
-        label: `${pages} Pages × ${copies} Copies (${config.colorMode === 'color' ? 'Full Color' : 'B&W'}, ${config.paperSize || 'A4'})`,
+        label: `${pages} Pages × ${copies} Copies (${config.colorMode === 'color' ? 'Full Color' : 'B&W'}, ${sideLabel}, ${config.paperSize || 'A4'}) @ ₹${pageRate}/pg`,
         amount: printCost,
       });
 

@@ -13,6 +13,7 @@ export interface UploadedFileMeta {
 
 interface FileUploaderProps {
   onFilesChanged: (files: UploadedFileMeta[]) => void;
+  onRawFilesChanged?: (files: UploadedFileMeta[], rawFiles: File[]) => void;
   maxFiles?: number;
   maxSizeBytes?: number; // default 50MB
   acceptedTypes?: string[];
@@ -21,6 +22,7 @@ interface FileUploaderProps {
 
 export const FileUploader: React.FC<FileUploaderProps> = ({
   onFilesChanged,
+  onRawFilesChanged,
   maxFiles = 5,
   maxSizeBytes = 50 * 1024 * 1024, // 50MB
   acceptedTypes = [
@@ -34,6 +36,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
   initialFiles = [],
 }) => {
   const [files, setFiles] = useState<UploadedFileMeta[]>(initialFiles);
+  const [rawFiles, setRawFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -48,8 +51,10 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
   const handleFiles = (incomingFiles: FileList | File[]) => {
     setErrorMessage(null);
     const newFileMetas: UploadedFileMeta[] = [...files];
+    const newRawFiles: File[] = [...rawFiles];
+    const incomingArray = Array.from(incomingFiles);
 
-    if (files.length + incomingFiles.length > maxFiles) {
+    if (files.length + incomingArray.length > maxFiles) {
       setErrorMessage(`You can upload a maximum of ${maxFiles} files per printing job.`);
       return;
     }
@@ -66,7 +71,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
       });
     }, 150);
 
-    Array.from(incomingFiles).forEach((file) => {
+    Array.from(incomingArray).forEach((file) => {
       // Validate file size
       if (file.size > maxSizeBytes) {
         setErrorMessage(`"${file.name}" exceeds the maximum limit of ${formatFileSize(maxSizeBytes)}.`);
@@ -94,6 +99,8 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
         uploadedAt: new Date().toISOString(),
       };
 
+      newRawFiles.push(file);
+
       // Create preview for images
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
@@ -101,13 +108,17 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
           meta.preview = e.target?.result as string;
           newFileMetas.push(meta);
           setFiles([...newFileMetas]);
+          setRawFiles([...newRawFiles]);
           onFilesChanged([...newFileMetas]);
+          onRawFilesChanged?.([...newFileMetas], [...newRawFiles]);
         };
         reader.readAsDataURL(file);
       } else {
         newFileMetas.push(meta);
         setFiles([...newFileMetas]);
+        setRawFiles([...newRawFiles]);
         onFilesChanged([...newFileMetas]);
+        onRawFilesChanged?.([...newFileMetas], [...newRawFiles]);
       }
     });
 
@@ -137,8 +148,11 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
 
   const handleRemove = (index: number) => {
     const updated = files.filter((_, i) => i !== index);
+    const updatedRaw = rawFiles.filter((_, i) => i !== index);
     setFiles(updated);
+    setRawFiles(updatedRaw);
     onFilesChanged(updated);
+    onRawFilesChanged?.(updated, updatedRaw);
   };
 
   return (

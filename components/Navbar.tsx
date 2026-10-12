@@ -52,9 +52,9 @@ export const Navbar: React.FC = () => {
   ];
 
   const quickServices = [
+    { name: 'Document & PDF Printing', href: '/services/document-printing', desc: 'Laser Xerox & Thesis' },
     { name: 'Flex & Banner Printing', href: '/services/flex-printing', desc: 'From ₹12/sq.ft' },
     { name: 'Visiting Cards', href: '/services/visiting-card-printing', desc: 'Matte, Gloss, Velvet' },
-    { name: 'Document & PDF Printing', href: '/services/document-printing', desc: 'Laser Xerox & Thesis' },
     { name: 'Sticker & Label Printing', href: '/services/sticker-label-printing', desc: 'Die-cut waterproof' },
     { name: 'Posters & Photo Frames', href: '/services/poster-printing', desc: 'High-res sunboard' },
     { name: 'Pamphlets & Brochures', href: '/services/flyer-brochure-printing', desc: 'Bulk marketing' },

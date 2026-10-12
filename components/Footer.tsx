@@ -15,9 +15,9 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const services = [
+    { name: 'Document & Thesis Xerox', href: '/services/document-printing' },
     { name: 'Flex & Banner Printing', href: '/services/flex-printing' },
     { name: 'Visiting & Business Cards', href: '/services/visiting-card-printing' },
-    { name: 'Document & Thesis Xerox', href: '/services/document-printing' },
     { name: 'Waterproof Vinyl Stickers', href: '/services/sticker-label-printing' },
     { name: 'Sunboard Posters & Frames', href: '/services/poster-printing' },
     { name: 'Brochures & Pamphlets', href: '/services/flyer-brochure-printing' },

@@ -12,7 +12,7 @@ import { JsonLd } from '@/components/JsonLd';
 
 function CustomPrintingContent() {
   const searchParams = useSearchParams();
-  const initialService = searchParams.get('service') || 'flex-printing';
+  const initialService = searchParams.get('service') || 'document-printing';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">

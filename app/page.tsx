@@ -35,7 +35,7 @@ import { addToCart } from '@/lib/storage';
 
 export default function HomePage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [selectedQuickService, setSelectedQuickService] = useState('flex-printing');
+  const [selectedQuickService, setSelectedQuickService] = useState('document-printing');
   const [addedProductId, setAddedProductId] = useState<string | null>(null);
 
   const handleQuickAddToCart = (product: typeof INITIAL_PRODUCTS[0]) => {
