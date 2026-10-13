@@ -1,19 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ShoppingBag, Search, Filter, ArrowRight, Check } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
-import { INITIAL_PRODUCTS } from '@/lib/data';
-import { addToCart } from '@/lib/storage';
+import { getStoredProducts, addToCart } from '@/lib/storage';
+import { ProductItem } from '@/lib/types';
 import { JsonLd } from '@/components/JsonLd';
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<ProductItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [addedId, setAddedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setProducts(getStoredProducts());
+    const onUpdate = () => setProducts(getStoredProducts());
+    window.addEventListener('products_updated', onUpdate);
+    return () => window.removeEventListener('products_updated', onUpdate);
+  }, []);
 
   const categories = [
     { id: 'all', label: 'All Products' },
@@ -24,7 +32,7 @@ export default function ProductsPage() {
     { id: 'flyer-pamphlet', label: 'Flyers & Pamphlets' },
   ];
 
-  const filtered = INITIAL_PRODUCTS.filter((prod) => {
+  const filtered = products.filter((prod) => {
     const matchesCat = selectedCategory === 'all' || prod.category === selectedCategory;
     const matchesSearch =
       prod.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -32,7 +40,7 @@ export default function ProductsPage() {
     return matchesCat && matchesSearch;
   });
 
-  const handleAddToCart = (product: typeof INITIAL_PRODUCTS[0]) => {
+  const handleAddToCart = (product: ProductItem) => {
     addToCart({
       id: `prod-${product.id}-${Date.now()}`,
       type: 'standard_product',
@@ -51,7 +59,7 @@ export default function ProductsPage() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Print Products Shop | Swarali Prints Nashik',
-    itemListElement: INITIAL_PRODUCTS.map((prod, index) => ({
+    itemListElement: products.map((prod: ProductItem, index: number) => ({
       '@type': 'ListItem',
       position: index + 1,
       item: {

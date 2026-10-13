@@ -12,6 +12,7 @@ import {
   QuoteRequest,
   OrderStatus,
   ProofItem,
+  PaymentStatus,
 } from './types';
 import {
   INITIAL_SERVICES,
@@ -109,12 +110,20 @@ export function getOrderById(orderId: string): Order | undefined {
 export function saveOrder(order: Order): void {
   const orders = getStoredOrders();
   const index = orders.findIndex((o) => o.id === order.id);
+  order.updatedAt = new Date().toISOString();
   if (index >= 0) {
     orders[index] = order;
   } else {
     orders.unshift(order);
   }
   safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
+}
+
+export function deleteOrder(orderId: string): void {
+  const orders = getStoredOrders().filter((o) => o.id !== orderId);
+  safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
 }
 
 export function updateOrderStatus(
@@ -127,13 +136,87 @@ export function updateOrderStatus(
   if (!order) return null;
 
   order.status = newStatus;
-  order.statusHistory.push({
+  order.updatedAt = new Date().toISOString();
+  const historyEntry = {
     status: newStatus,
     timestamp: new Date().toISOString(),
     note: note || `Status updated to ${newStatus.replace(/_/g, ' ')}`,
-  });
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
 
   safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
+  return order;
+}
+
+export function updateOrderPaymentStatus(
+  orderId: string,
+  paymentStatus: PaymentStatus,
+  paymentRef?: string
+): Order | null {
+  const orders = getStoredOrders();
+  const order = orders.find((o) => o.id === orderId);
+  if (!order) return null;
+
+  order.paymentStatus = paymentStatus;
+  if (paymentRef !== undefined) order.paymentRef = paymentRef;
+  order.updatedAt = new Date().toISOString();
+
+  const note = `Payment status updated to ${paymentStatus.toUpperCase()}${paymentRef ? ` (Ref: ${paymentRef})` : ''}`;
+  const historyEntry = {
+    status: order.status,
+    timestamp: new Date().toISOString(),
+    note,
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
+
+  safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
+  return order;
+}
+
+export function updateOrderTracking(
+  orderId: string,
+  trackingData: {
+    trackingCarrier?: string;
+    trackingNumber?: string;
+    trackingUrl?: string;
+    estimatedDelivery?: string;
+    adminNotes?: string;
+  }
+): Order | null {
+  const orders = getStoredOrders();
+  const order = orders.find((o) => o.id === orderId);
+  if (!order) return null;
+
+  if (trackingData.trackingCarrier !== undefined) order.trackingCarrier = trackingData.trackingCarrier;
+  if (trackingData.trackingNumber !== undefined) order.trackingNumber = trackingData.trackingNumber;
+  if (trackingData.trackingUrl !== undefined) order.trackingUrl = trackingData.trackingUrl;
+  if (trackingData.estimatedDelivery !== undefined) order.estimatedDelivery = trackingData.estimatedDelivery;
+  if (trackingData.adminNotes !== undefined) order.adminNotes = trackingData.adminNotes;
+  order.updatedAt = new Date().toISOString();
+
+  const note = trackingData.trackingNumber
+    ? `Dispatched via ${trackingData.trackingCarrier || 'Courier'} (AWB: ${trackingData.trackingNumber})`
+    : `Tracking information updated`;
+  const historyEntry = {
+    status: order.status,
+    timestamp: new Date().toISOString(),
+    note,
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
+
+  safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
   return order;
 }
 
@@ -150,20 +233,28 @@ export function uploadProofToOrder(
     id: `proof-${Date.now()}`,
     uploadedAt: new Date().toISOString(),
     imageUrl,
-    version: order.proofs.length + 1,
+    version: (order.proofs?.length || 0) + 1,
     notes,
     status: 'pending',
   };
 
+  if (!order.proofs) order.proofs = [];
   order.proofs.unshift(newProof);
   order.status = 'customer_approval';
-  order.statusHistory.push({
-    status: 'customer_approval',
+  order.updatedAt = new Date().toISOString();
+
+  const historyEntry = {
+    status: 'customer_approval' as OrderStatus,
     timestamp: new Date().toISOString(),
     note: `Sample/Proof version ${newProof.version} uploaded for customer review`,
-  });
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
 
   safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
   return order;
 }
 
@@ -172,20 +263,27 @@ export function approveProof(orderId: string, proofId: string): Order | null {
   const order = orders.find((o) => o.id === orderId);
   if (!order) return null;
 
-  const proof = order.proofs.find((p) => p.id === proofId);
+  const proof = order.proofs?.find((p) => p.id === proofId);
   if (proof) {
     proof.status = 'approved';
     proof.resolvedAt = new Date().toISOString();
   }
 
   order.status = 'printing';
-  order.statusHistory.push({
-    status: 'printing',
+  order.updatedAt = new Date().toISOString();
+
+  const historyEntry = {
+    status: 'printing' as OrderStatus,
     timestamp: new Date().toISOString(),
     note: 'Customer approved proof. Sent to printing queue.',
-  });
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
 
   safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
   return order;
 }
 
@@ -198,7 +296,7 @@ export function requestProofChanges(
   const order = orders.find((o) => o.id === orderId);
   if (!order) return null;
 
-  const proof = order.proofs.find((p) => p.id === proofId);
+  const proof = order.proofs?.find((p) => p.id === proofId);
   if (proof) {
     proof.status = 'changes_requested';
     proof.customerComments = customerComments;
@@ -206,13 +304,20 @@ export function requestProofChanges(
   }
 
   order.status = 'proof_design';
-  order.statusHistory.push({
-    status: 'proof_design',
+  order.updatedAt = new Date().toISOString();
+
+  const historyEntry = {
+    status: 'proof_design' as OrderStatus,
     timestamp: new Date().toISOString(),
     note: `Customer requested changes: "${customerComments}"`,
-  });
+  };
+  if (!order.statusHistory) order.statusHistory = [];
+  order.statusHistory.push(historyEntry);
+  if (!order.history) order.history = [];
+  order.history.push(historyEntry);
 
   safeSet(STORAGE_KEYS.ORDERS, orders);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('orders_updated'));
   return order;
 }
 
@@ -360,6 +465,34 @@ export function getStoredQuotes(): QuoteRequest[] {
   return safeGet<QuoteRequest[]>(STORAGE_KEYS.QUOTES, INITIAL_QUOTES);
 }
 
+export function saveCoupon(coupon: Coupon): void {
+  const coupons = getStoredCoupons();
+  const idx = coupons.findIndex((c) => c.code.toUpperCase() === coupon.code.toUpperCase());
+  if (idx >= 0) {
+    coupons[idx] = coupon;
+  } else {
+    coupons.unshift(coupon);
+  }
+  safeSet(STORAGE_KEYS.COUPONS, coupons);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('coupons_updated'));
+}
+
+export function deleteCoupon(code: string): void {
+  const coupons = getStoredCoupons().filter((c) => c.code.toUpperCase() !== code.toUpperCase());
+  safeSet(STORAGE_KEYS.COUPONS, coupons);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('coupons_updated'));
+}
+
+export function toggleCouponStatus(code: string): void {
+  const coupons = getStoredCoupons();
+  const coupon = coupons.find((c) => c.code.toUpperCase() === code.toUpperCase());
+  if (coupon) {
+    coupon.active = !coupon.active;
+    safeSet(STORAGE_KEYS.COUPONS, coupons);
+    if (typeof window !== 'undefined') window.dispatchEvent(new Event('coupons_updated'));
+  }
+}
+
 // ---------------- ALIASES & EXTRA HELPERS FOR UI PAGES ----------------
 export const getAllOrders = getStoredOrders;
 export const getAllQuoteRequests = getStoredQuotes;
@@ -376,13 +509,107 @@ export function saveQuoteRequest(quote: QuoteRequest): void {
     quotes.unshift(quote);
   }
   safeSet(STORAGE_KEYS.QUOTES, quotes);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('quotes_updated'));
 }
 
-export function updateQuoteStatus(quoteId: string, status: QuoteRequest['status']): void {
+export function deleteQuoteRequest(quoteId: string): void {
+  const quotes = getStoredQuotes().filter((q) => q.id !== quoteId);
+  safeSet(STORAGE_KEYS.QUOTES, quotes);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('quotes_updated'));
+}
+
+export function updateQuoteStatus(
+  quoteId: string,
+  status: QuoteRequest['status'],
+  quotedPrice?: number,
+  notes?: string
+): void {
   const quotes = getStoredQuotes();
   const q = quotes.find((item) => item.id === quoteId);
   if (q) {
     q.status = status;
+    if (quotedPrice !== undefined) q.quotedPrice = quotedPrice;
+    if (notes !== undefined) q.notes = notes;
     safeSet(STORAGE_KEYS.QUOTES, quotes);
+    if (typeof window !== 'undefined') window.dispatchEvent(new Event('quotes_updated'));
   }
+}
+
+export function convertQuoteToOrder(quoteId: string): Order | null {
+  const quotes = getStoredQuotes();
+  const q = quotes.find((item) => item.id === quoteId);
+  if (!q) return null;
+
+  const orderId = `SP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const orderAmount = q.quotedPrice || 1000;
+
+  const newOrder: Order = {
+    id: orderId,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    customerName: q.customerName || q.name || 'Valued Client',
+    customerPhone: q.phone,
+    customerEmail: q.email || `${q.phone.replace(/[^0-9]/g, '')}@customer.swaraliprints.local`,
+    fulfillmentMethod: 'store_pickup',
+    fulfillmentCost: 0,
+    items: [
+      {
+        id: `quote-item-${Date.now()}`,
+        type: 'custom_printing',
+        title: `Bulk Job: ${q.serviceNeeded || q.serviceType || 'Custom Printing'}`,
+        image: '/images/product-outdoor-flex-banner.jpg',
+        quantity: 1,
+        unitPrice: orderAmount,
+        totalPrice: orderAmount,
+        instructions: `Converted from Quote #${q.id}. Specs: ${q.sizeSpecs || q.approxQuantity || q.description || 'Standard Specs'}`,
+      },
+    ],
+    subtotal: orderAmount,
+    discount: 0,
+    totalAmount: orderAmount,
+    paymentMethod: 'upi_qr',
+    paymentStatus: 'pending',
+    status: 'order_placed',
+    statusHistory: [
+      {
+        status: 'order_placed',
+        timestamp: new Date().toISOString(),
+        note: `Order converted from Bulk RFQ Inquiry #${q.id}`,
+      },
+    ],
+    history: [
+      {
+        status: 'order_placed',
+        timestamp: new Date().toISOString(),
+        note: `Order converted from Bulk RFQ Inquiry #${q.id}`,
+      },
+    ],
+    proofs: [],
+    customerNotes: q.description,
+  };
+
+  saveOrder(newOrder);
+  q.status = 'converted';
+  safeSet(STORAGE_KEYS.QUOTES, quotes);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('quotes_updated'));
+    window.dispatchEvent(new Event('orders_updated'));
+  }
+  return newOrder;
+}
+
+export function resetToSampleData(): void {
+  if (typeof window === 'undefined') return;
+  safeSet(STORAGE_KEYS.SERVICES, INITIAL_SERVICES);
+  safeSet(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
+  safeSet(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
+  safeSet(STORAGE_KEYS.PORTFOLIO, INITIAL_PORTFOLIO);
+  safeSet(STORAGE_KEYS.REVIEWS, INITIAL_REVIEWS);
+  safeSet(STORAGE_KEYS.SETTINGS, INITIAL_SETTINGS);
+  safeSet(STORAGE_KEYS.COUPONS, INITIAL_COUPONS);
+  safeSet(STORAGE_KEYS.QUOTES, INITIAL_QUOTES);
+  window.dispatchEvent(new Event('orders_updated'));
+  window.dispatchEvent(new Event('quotes_updated'));
+  window.dispatchEvent(new Event('products_updated'));
+  window.dispatchEvent(new Event('coupons_updated'));
 }

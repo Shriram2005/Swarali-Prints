@@ -19,25 +19,39 @@ export default function TrackOrderPage() {
     const clean = searchTerm.trim();
     if (!clean) return;
 
-    // Check if it matches an order ID
+    // Check if it matches an order ID (case insensitive, trimmed)
     const foundById = getOrderById(clean);
     if (foundById) {
       router.push(`/orders/${foundById.id}`);
       return;
     }
 
-    // Check if it matches a phone number
+    // Check if it matches a phone number (strip non-digits for comparison)
     const all = getAllOrders();
-    const foundByPhone = all.find((o) => o.customerPhone.includes(clean));
+    const cleanDigits = clean.replace(/[^0-9]/g, '');
+    const foundByPhone = all.find((o) => {
+      const orderDigits = o.customerPhone.replace(/[^0-9]/g, '');
+      if (cleanDigits.length >= 6) {
+        return orderDigits.includes(cleanDigits) || cleanDigits.includes(orderDigits);
+      }
+      return o.customerPhone.toLowerCase().includes(clean.toLowerCase());
+    });
     if (foundByPhone) {
       router.push(`/orders/${foundByPhone.id}`);
       return;
     }
 
-    setErrorMessage(`No order found matching "${clean}". Please check your order ID (e.g. SP-2026-0001) or phone number.`);
+    setErrorMessage(`No order found matching "${clean}". Please check your order ID (e.g. SP-2026-0001) or mobile number.`);
   };
 
-  const sampleOrders = getAllOrders().slice(0, 3);
+  const [sampleOrders, setSampleOrders] = useState<any[]>([]);
+
+  React.useEffect(() => {
+    setSampleOrders(getAllOrders().slice(0, 4));
+    const onOrdersUpdate = () => setSampleOrders(getAllOrders().slice(0, 4));
+    window.addEventListener('orders_updated', onOrdersUpdate);
+    return () => window.removeEventListener('orders_updated', onOrdersUpdate);
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">

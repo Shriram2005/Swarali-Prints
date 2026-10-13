@@ -14,6 +14,9 @@ import {
   ArrowLeft,
   Share2,
   ExternalLink,
+  Truck,
+  Package,
+  Download,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -125,8 +128,77 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
               </span>
             </div>
 
-            <OrderTimeline currentStatus={order.status} history={order.history} />
+            <OrderTimeline
+              currentStatus={order.status}
+              history={order.statusHistory && order.statusHistory.length > 0 ? order.statusHistory : order.history}
+            />
           </div>
+
+          {/* Dispatch & Consignment Tracking Card (if tracking info exists) */}
+          {(order.trackingCarrier || order.trackingNumber || order.estimatedDelivery) && (
+            <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-800 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-400/30">
+                    <Truck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-base text-white">
+                      Dispatch & Shipment Tracking
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      Live dispatch details provided by Swarali Prints logistics team
+                    </p>
+                  </div>
+                </div>
+
+                {order.trackingCarrier && (
+                  <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 font-bold text-xs">
+                    Carrier: {order.trackingCarrier}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                {order.trackingNumber && (
+                  <div className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/60">
+                    <span className="text-slate-400 block text-[11px] mb-0.5">Consignment / AWB No.:</span>
+                    <span className="font-mono font-bold text-white text-sm">{order.trackingNumber}</span>
+                  </div>
+                )}
+
+                {order.estimatedDelivery && (
+                  <div className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/60">
+                    <span className="text-slate-400 block text-[11px] mb-0.5">Estimated Arrival / Pickup:</span>
+                    <span className="font-bold text-emerald-400 text-sm">{order.estimatedDelivery}</span>
+                  </div>
+                )}
+
+                {order.fulfillmentMethod && (
+                  <div className="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/60">
+                    <span className="text-slate-400 block text-[11px] mb-0.5">Fulfillment Mode:</span>
+                    <span className="font-bold text-slate-200 capitalize text-sm">
+                      {order.fulfillmentMethod.replace(/_/g, ' ')}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {order.trackingUrl && (
+                <div className="pt-2">
+                  <a
+                    href={order.trackingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all"
+                  >
+                    <span>Open Carrier Live Tracking Portal</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Digital Proof Review Box (If pending/requested or proof exists) */}
           {latestProof && (

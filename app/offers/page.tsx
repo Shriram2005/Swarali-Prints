@@ -1,15 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Tag, Copy, Check, Sparkles, ArrowRight, Percent, Award } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
-import { INITIAL_COUPONS } from '@/lib/data';
+import { getStoredCoupons } from '@/lib/storage';
+import { Coupon } from '@/lib/types';
 
 export default function OffersPage() {
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCoupons(getStoredCoupons().filter((c) => c.active));
+    const onUpdate = () => setCoupons(getStoredCoupons().filter((c) => c.active));
+    window.addEventListener('coupons_updated', onUpdate);
+    return () => window.removeEventListener('coupons_updated', onUpdate);
+  }, []);
 
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -40,7 +49,7 @@ export default function OffersPage() {
 
           {/* Active Coupons Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {INITIAL_COUPONS.map((coupon) => (
+            {coupons.map((coupon) => (
               <div
                 key={coupon.code}
                 className="bg-white rounded-3xl border-2 border-dashed border-pink-200 p-6 sm:p-7 shadow-xs hover:border-pink-500 transition-all flex flex-col justify-between space-y-4 relative overflow-hidden"

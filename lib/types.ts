@@ -216,6 +216,10 @@ export interface Order {
   specialInstructions?: string;
   adminNotes?: string;
   updatedAt?: string;
+  trackingCarrier?: string;
+  trackingNumber?: string;
+  trackingUrl?: string;
+  estimatedDelivery?: string;
 }
 
 export interface PortfolioItem {

@@ -83,3 +83,50 @@ export function buildWhatsAppQuoteInquiry(data: {
   msg += `\nPlease provide your wholesale quotation and expected delivery timeline.`;
   return `https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(msg)}`;
 }
+
+export function buildWhatsAppDispatchNotification(
+  phone: string,
+  orderId: string,
+  carrier: string,
+  trackingNumber: string,
+  customerName: string,
+  trackingUrl?: string
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const targetNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
+  let message = `Hello ${customerName},\n\nGood news! Your Swarali Prints order *${orderId}* has been dispatched via *${carrier}*.\n`;
+  if (trackingNumber) message += `*Consignment / AWB No.:* ${trackingNumber}\n`;
+  if (trackingUrl) message += `*Track Consignment:* ${trackingUrl}\n`;
+  message += `\nYou can also track your live order progress here: https://swaraliprints.com/orders/${orderId}\n\nThank you for choosing Swarali Prints, Cidco, Nashik!`;
+  return `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export function buildWhatsAppProofReadyNotification(
+  phone: string,
+  orderId: string,
+  customerName: string,
+  proofVersion: number
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const targetNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
+  const message = `Hello ${customerName},\n\nYour digital print proof (Revision v${proofVersion}) for order *${orderId}* is ready for your approval!\n\nPlease review the sample layout, spellings, and margins here: https://swaraliprints.com/orders/${orderId}\n\nOnce you approve, we will immediately send it to the printing press.\n\nSwarali Prints, Trimurti Chowk, Cidco, Nashik`;
+  return `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export function buildWhatsAppQuoteResponseNotification(
+  phone: string,
+  quoteId: string,
+  customerName: string,
+  service: string,
+  quotedPrice: number,
+  notes?: string
+): string {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const targetNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`;
+  let message = `Hello ${customerName},\n\nGreetings from Swarali Prints, Cidco, Nashik!\n\nRegarding your bulk inquiry *#${quoteId}* for *${service}*:\n`;
+  message += `*Official Quoted Price:* ₹${quotedPrice.toLocaleString()} (Tax included)\n`;
+  if (notes) message += `*Details & Turnaround:* ${notes}\n`;
+  message += `\nPlease reply to this message to confirm and start production. Thank you!`;
+  return `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`;
+}
+
